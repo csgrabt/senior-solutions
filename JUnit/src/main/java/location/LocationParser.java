@@ -18,7 +18,14 @@ public class LocationParser {
         if (text == null || !text.contains(REGEX)) {
             throw new IllegalArgumentException("Invalid text!");
         }
-
-
     }
+
+    public boolean isOnEquator(Location location) {
+        return 0 == location.getLat();
+    }
+
+    public boolean isOnPrimeMeridian(Location location) {
+        return 0 == location.getLon();
+    }
+
 }
