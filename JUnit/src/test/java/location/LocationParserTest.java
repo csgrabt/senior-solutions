@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LocationParserTest {
     LocationParser locationParser;
     Location location;
+    String text = "Budapest,47.497912,19.040235";
 
     @BeforeEach
     void setUP() {
@@ -18,7 +19,7 @@ class LocationParserTest {
 
     @Test
     void testParse() {
-        String text = "Budapest,47.497912,19.040235";
+
 
         Location location = locationParser.parse(text);
 
@@ -45,4 +46,35 @@ class LocationParserTest {
     void isOnMeridian() {
         assertTrue(locationParser.isOnPrimeMeridian(location));
     }
+
+
+    @Test
+    void parseTest() {
+        Location location = locationParser.parse(text);
+        Location location2 = locationParser.parse(text);
+
+        assertNotSame(location, location2);
+        assertEquals(location, location2);
+    }
+
+    @Test
+    void distanceCalculator() {
+        Location location = new Location("A", 42.990967, -71.463767, 63);
+        Location location2 = new Location("B", 65.990967, 179.463767, 111);
+
+        assertEquals(6481, location.distance(location2), 10);
+    }
+
+    @Test
+    void parseTestAllAttribute() {
+        Location location5 = locationParser.parse(text);
+        assertAll(
+                () -> assertEquals("Budapest", location5.getName()),
+                () -> assertEquals(47.497912, location5.getLat()),
+                () -> assertEquals(19.040235, location5.getLon()),
+                () -> assertEquals(0, location5.getHeight())
+
+        );
+    }
+
 }
