@@ -9,12 +9,16 @@ public class Location {
     private double height;
 
     public Location(String name, double lat, double lon) {
+        validatorLon(lon);
+        validatorLat(lat);
         this.name = name;
         this.lat = lat;
         this.lon = lon;
     }
 
     public Location(String name, double lat, double lon, double height) {
+        validatorLon(lon);
+        validatorLat(lat);
         this.name = name;
         this.lat = lat;
         this.lon = lon;
@@ -38,7 +42,14 @@ public class Location {
     }
 
     public void setLat(double lat) {
+        validatorLat(lat);
         this.lat = lat;
+    }
+
+    private void validatorLat(double lat) {
+        if (lat < -90 || lat > 90) {
+            throw new IllegalArgumentException("Latitude " + lat + " is not valid!");
+        }
     }
 
     public double getLon() {
@@ -46,6 +57,7 @@ public class Location {
     }
 
     public void setLon(double lon) {
+        validatorLon(lon);
         this.lon = lon;
     }
 
@@ -67,6 +79,13 @@ public class Location {
 
         return Math.sqrt(distance);
     }
+
+    private void validatorLon(double lon) {
+        if (lon > 180 || lon < -180) {
+            throw new IllegalArgumentException("Longitude " + lon + " is not valid!");
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
