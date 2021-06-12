@@ -1,6 +1,8 @@
 package location;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,4 +79,20 @@ class LocationParserTest {
         );
     }
 
+    private Object[][] locations = {
+            {new Location("Alma", 0, 0), true},
+            {new Location("Alma", 90, 1), false},
+            {new Location("Alma", 90, 1), false},
+            {new Location("Alma", 90, 1), false},
+            {new Location("Alma", 0, 0), true},
+
+    };
+
+    @RepeatedTest(value = 5, name = "Is on meridian {currentRepetition} / {totalRepetition}")
+    void test(RepetitionInfo repetitionInfo) {
+
+
+        assertEquals(locations[repetitionInfo.getCurrentRepetition() -1][1],
+                locationParser.isOnEquator((Location) locations[repetitionInfo.getCurrentRepetition()-1][0]));
+    }
 }
