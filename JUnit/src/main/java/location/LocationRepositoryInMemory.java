@@ -8,6 +8,7 @@ public class LocationRepositoryInMemory implements LocationRepository {
 
     private List<Location> locations = new ArrayList<>();
 
+    @Override
     public void add(Location location) {
         locations.add(location);
     }
