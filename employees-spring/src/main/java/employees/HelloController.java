@@ -12,7 +12,7 @@ public class HelloController {
     @GetMapping("/")
     @ResponseBody
     public String sayHello() {
-        return "Hello World" + LocalDateTime.now();
+        return "Hello World " + LocalDateTime.now();
     }
 
 }
