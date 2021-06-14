@@ -18,6 +18,11 @@ public class LocationsController {
         this.locationsService = locationsService;
     }
 
+ @GetMapping("/")
+ public String getFirst(){
+        return "Itt még nincs semmi, csak a /location-ön";
+ }
+
     @GetMapping("/location")
     public String geLocation() {
         return locationsService.getLocation()
