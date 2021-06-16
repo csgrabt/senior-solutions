@@ -17,12 +17,12 @@ class LocationOperatorsTest {
     void setUp() {
         locationList = Arrays.asList(
                 new Location("Somewhere", 1, 1),
-                new Location("Somewhere", -1, 1),
-                new Location("Somewhere", -1, 1),
-                new Location("Somewhere", -1, 1),
-                new Location("Somewhere", -1, 1),
-                new Location("Somewhere", -1, 1),
-                new Location("Somewhere", -1, 1),
+                new Location("Somewherec", -1, 1),
+                new Location("Somewherec", -1, 1),
+                new Location("Somewherec", -1, 1),
+                new Location("Somewherec", -1, 1),
+                new Location("Somewherec", -1, 1),
+                new Location("Somewherec", -1, 1),
                 new Location("Somewhere", 1, 1)
         );
 
