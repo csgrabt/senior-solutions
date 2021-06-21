@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,12 +26,12 @@ class LocationsControllerTest {
 
     @Test
      void geLocation() {
-         when(locationsService.getLocation()).thenReturn(Arrays.asList(
+         when(locationsService.getLocation(Optional.empty())).thenReturn(Arrays.asList(
                  new LocationDto("Budapest", 0, 0),
                  new LocationDto("Xuzhou", 10, 15)
          ));
 
-          String locations = locationsController.geLocation();
+          String locations = locationsController.geLocation(Optional.empty());
 
           assertThat(locations).contains("Budapest", "Xuzhou");
       }

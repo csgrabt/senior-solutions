@@ -5,10 +5,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,9 +23,15 @@ public class LocationsService {
     }
 
 
-    public List<LocationDto> getLocation() {
+    public List<LocationDto> getLocation(Optional<String> prefix) {
         Type targetListType = new TypeToken<List<LocationDto>>() {
         }.getType();
-        return modelMapper.map(favoriteLocations, targetListType);
+
+        List<Location> filtered = favoriteLocations
+                .stream()
+                .filter(n -> prefix.isEmpty() || n.getName().toLowerCase().startsWith(prefix.get().toLowerCase()))
+                .collect(Collectors.toList());
+
+        return modelMapper.map(filtered, targetListType);
     }
 }
