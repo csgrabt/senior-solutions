@@ -24,14 +24,14 @@ class LocationsControllerTest {
     LocationsController locationsController;
 
     @Test
-    void geLocation() {
-        when(locationsService.getLocation()).thenReturn(Arrays.asList(
-                new Location("Budapest", 0, 0),
-                new Location("Xuzhou", 10, 15)
-        ));
+     void geLocation() {
+         when(locationsService.getLocation()).thenReturn(Arrays.asList(
+                 new LocationDto("Budapest", 0, 0),
+                 new LocationDto("Xuzhou", 10, 15)
+         ));
 
-        String locations = locationsController.geLocation();
+          String locations = locationsController.geLocation();
 
-        assertThat(locations).contains("Budapest", "Xuzhou");
-    }
+          assertThat(locations).contains("Budapest", "Xuzhou");
+      }
 }
