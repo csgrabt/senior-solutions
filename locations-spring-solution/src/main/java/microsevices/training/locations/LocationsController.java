@@ -1,12 +1,9 @@
 package microsevices.training.locations;
 
 
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,7 +19,6 @@ public class LocationsController {
     }
 
 
-
     @GetMapping
     public String geLocation(@RequestParam Optional<String> prefix) {
         return locationsService.getLocation(prefix)
@@ -31,5 +27,11 @@ public class LocationsController {
                 .collect(Collectors.toList())
                 .toString();
     }
+
+    @GetMapping("/{latMax}/{latMin}/{lonMax}/{lonMin}")
+    public List<LocationDto> findLocationByCoordinate(@PathVariable("latMax") Optional<Long> latMax, @PathVariable("latMin") Optional<Long> latMin, @PathVariable("lonMax") Optional<Long> lonMax, @PathVariable("lonMin") Optional<Long> lonMin) {
+        return locationsService.findLocationByCoordinate(latMax, latMin, lonMax, lonMin);
+    }
+
 
 }

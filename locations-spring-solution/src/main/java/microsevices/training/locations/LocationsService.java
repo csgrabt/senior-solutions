@@ -34,4 +34,18 @@ public class LocationsService {
 
         return modelMapper.map(filtered, targetListType);
     }
+
+    public List<LocationDto> findLocationByCoordinate(Optional<Long> latMax, Optional<Long> latMin, Optional<Long> lonMax, Optional<Long> lonMin) {
+        Type targetListType = new TypeToken<List<LocationDto>>() {
+        }.getType();
+
+        List<Location> filtered = favoriteLocations
+                .stream()
+                .filter(n -> latMax.isEmpty() || n.getLat() <= latMax.get())
+                .filter(n -> latMin.isEmpty() || n.getLat() >= latMin.get())
+                .filter(n -> lonMax.isEmpty() || n.getLon() <= lonMax.get())
+                .filter(n -> lonMin.isEmpty() || n.getLon() >= lonMin.get())
+                .collect(Collectors.toList());
+        return modelMapper.map(filtered, targetListType);
+    }
 }
