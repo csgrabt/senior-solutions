@@ -1,6 +1,7 @@
 package car;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashSet;
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CarControllerTest {
-    CarController carController = new CarController(new CarService());
+    @Autowired
+    CarController carController;
 
     @Test
     void cars() {

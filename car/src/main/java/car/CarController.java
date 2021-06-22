@@ -25,9 +25,7 @@ public class CarController {
 
     @GetMapping("/types")
     public Set<String> types() {
-        return carService.getCars().stream()
-                .map(n -> n.getBrand() + " - " + n.getType())
-                .collect(Collectors.toSet());
+        return carService.getCarsBand();
     }
 }
 
