@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CarService {
 
-    private List<Car> cars = Arrays.asList(
+    private List<Car> cars = Collections.synchronizedList(Arrays.asList(
             new Car("Opel", "Astra", 1, Status.NORMAL,
                     List.of(
                             new KmState(LocalDate.of(2000, 10, 10), 25)
@@ -29,7 +30,7 @@ public class CarService {
                             new KmState(LocalDate.of(2000, 10, 10), 1125)
                     )
             )
-    );
+    ));
 
     public Set<String> getCarsBand() {
         return cars
@@ -37,4 +38,6 @@ public class CarService {
                 .map(Car::getBrand)
                 .collect(Collectors.toSet());
     }
+
+
 }

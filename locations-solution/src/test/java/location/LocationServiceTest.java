@@ -24,8 +24,8 @@ class LocationServiceTest {
         assertThat(locationList)
                 .as("Contains element, Bukarest")
                 .hasSize(2)
-                .extracting( Location::getName, Location::getHeight)
-                .contains(tuple("Bukarest", 0.0));
+                .extracting(Location::getName, Location::getLat)
+                .contains(tuple("Bukarest", 47.497912));
 
     }
 }

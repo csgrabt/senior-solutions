@@ -20,12 +20,9 @@ public class LocationsController {
 
 
     @GetMapping
-    public String geLocation(@RequestParam Optional<String> prefix) {
-        return locationsService.getLocation(prefix)
-                .stream()
-                .map(LocationDto::toString)
-                .collect(Collectors.toList())
-                .toString();
+    public List<LocationDto> geLocation(@RequestParam Optional<String> prefix) {
+        return locationsService.getLocation(prefix);
+
     }
 
     @GetMapping("/{latMax}/{latMin}/{lonMax}/{lonMin}")
