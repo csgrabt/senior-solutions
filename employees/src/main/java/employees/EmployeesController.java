@@ -25,4 +25,9 @@ public class EmployeesController {
         return employeesService.findEmployeeById(id);
     }
 
+    @PostMapping
+    public EmployeeDto createEmployee(@RequestBody CreateEmployeeCommand command) {
+        return employeesService.createEmployee(command);
+    }
+
 }
