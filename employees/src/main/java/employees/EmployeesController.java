@@ -1,5 +1,6 @@
 package employees;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,12 @@ public class EmployeesController {
 
 
     @GetMapping("/{id}")
-    public EmployeeDto findEmployeeById(@PathVariable("id") long id) {
-        return employeesService.findEmployeeById(id);
+    public ResponseEntity findEmployeeById(@PathVariable("id") long id) {
+        try {
+            return ResponseEntity.ok(employeesService.findEmployeeById(id));
+        } catch (IllegalArgumentException iea) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
