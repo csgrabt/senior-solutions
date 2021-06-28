@@ -30,4 +30,9 @@ public class EmployeesController {
         return employeesService.createEmployee(command);
     }
 
+    @PutMapping("/{id}")
+    public EmployeeDto updateEmployee(@PathVariable("id") long id, @RequestBody UpdateEmployeeCommand command) {
+        return employeesService.updateEmployee(id, command);
+
+    }
 }

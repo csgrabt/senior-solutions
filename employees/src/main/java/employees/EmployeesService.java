@@ -58,4 +58,14 @@ public class EmployeesService {
                         .orElseThrow(() -> new IllegalArgumentException("Employee not found: " + id)),
                 EmployeeDto.class);
     }
+
+    public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command) {
+        Employee employee = employeeList
+                .stream()
+                .filter(n -> n.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found: " + id));
+        employee.setName(command.getName());
+        return modelMapper.map(employee, EmployeeDto.class);
+    }
 }
