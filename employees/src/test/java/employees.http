@@ -24,3 +24,10 @@ Accept: application/json
 
 ###
 DELETE http://localhost:8080/api/employees/1
+
+### Validation
+
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{"name":  ""}
