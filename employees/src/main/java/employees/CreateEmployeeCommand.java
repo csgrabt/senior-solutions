@@ -10,6 +10,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateEmployeeCommand {
-    @NotBlank(message = "Name cannot be blank")
+   @Name(message = "Name cannot be blank")
     private String name;
 }
