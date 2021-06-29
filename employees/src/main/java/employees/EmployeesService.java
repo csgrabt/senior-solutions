@@ -77,4 +77,10 @@ public class EmployeesService {
                 .orElseThrow(() -> new IllegalArgumentException("Employee not found: " + id));
         employeeList.remove(employee);
     }
+
+    public void deleteAllEmployees() {
+        idGenerator = new AtomicLong();
+        employeeList.clear();
+    }
+
 }
