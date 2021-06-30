@@ -1,6 +1,7 @@
 package microsevices.training.locations;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,5 +31,9 @@ public class LocationsController {
         return locationsService.findLocationByCoordinate(latMax, latMin, lonMax, lonMin);
     }
 
-
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public LocationDto createLocation(@RequestBody CreateLocationCommand command) {
+        return locationsService.createLocation(command);
+    }
 }

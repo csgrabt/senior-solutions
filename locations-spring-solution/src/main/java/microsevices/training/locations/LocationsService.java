@@ -48,4 +48,15 @@ public class LocationsService {
                 .collect(Collectors.toList());
         return modelMapper.map(filtered, targetListType);
     }
+
+    public LocationDto createLocation(CreateLocationCommand command) {
+
+        Location location = new Location(
+                command.getName(),
+                command.getLat(),
+                command.getLon()
+        );
+        favoriteLocations.add(location);
+        return modelMapper.map(location, LocationDto.class);
+    }
 }
