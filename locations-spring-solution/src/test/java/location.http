@@ -1,0 +1,16 @@
+GET http://localhost:8080/api/locations/
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/locations/
+Content-Type: application/json
+
+{"name": "Nem-Xuzhou",
+  "lat": 16.12,
+  "lon": 18.23
+}
+
+###
+GET http://localhost:8080/api/locations?prefix=Nem-Xuzhou
+Accept: application/json
