@@ -42,4 +42,9 @@ public class LocationsController {
         return locationsService.updateLocation(id, command);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLocation(@PathVariable("id") long id) {
+        locationsService.deleteLocation(id);
+    }
 }

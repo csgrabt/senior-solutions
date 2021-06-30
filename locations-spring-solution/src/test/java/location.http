@@ -25,3 +25,6 @@ Content-Type: application/json
   "lat": 10000,
   "lon": ""
 }
+
+###
+DELETE http://localhost:8080/api/locations/1

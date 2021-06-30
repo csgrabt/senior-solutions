@@ -90,4 +90,9 @@ public class LocationsService {
                 .orElseThrow(() -> new IllegalArgumentException("Location not found: " + id));
     }
 
+    public void deleteLocation(long id) {
+        Location location = findLocation(id);
+
+        favoriteLocations.remove(location);
+    }
 }
