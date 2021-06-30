@@ -1,0 +1,28 @@
+POST http://localhost:8080/api/movies/
+Content-Type: application/json
+
+{
+  "title": "Alma",
+  "length": 115
+}
+
+
+###
+GET http://localhost:8080/api/movies/
+Accept: application/json
+
+###
+GET http://localhost:8080/api/movies/2
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/movies/1/rating
+Content-Type: application/json
+
+{
+  "rating": 115
+}
+
+###
+DELETE http://localhost:8080/api/movies/1
