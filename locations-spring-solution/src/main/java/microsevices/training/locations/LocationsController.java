@@ -36,4 +36,10 @@ public class LocationsController {
     public LocationDto createLocation(@RequestBody CreateLocationCommand command) {
         return locationsService.createLocation(command);
     }
+
+    @PutMapping("/{id}")
+    public LocationDto updateLocation(@PathVariable("id") long id, @RequestBody UpdateLocationCommand command) {
+        return locationsService.updateLocation(id, command);
+    }
+
 }

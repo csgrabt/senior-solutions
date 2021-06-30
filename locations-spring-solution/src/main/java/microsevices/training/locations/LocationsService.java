@@ -63,4 +63,31 @@ public class LocationsService {
         favoriteLocations.add(location);
         return modelMapper.map(location, LocationDto.class);
     }
+
+    public LocationDto updateLocation(long id, UpdateLocationCommand command) {
+
+        Location location = findLocation(id);
+
+        if (command.getName().isPresent()) {
+            location.setName(command.getName().get());
+        }
+        if (command.getLat().isPresent()) {
+            location.setLat(command.getLat().get());
+        }
+        if (command.getLon().isPresent()) {
+            location.setLon(command.getLon().get());
+        }
+
+        return modelMapper.map(location, LocationDto.class);
+    }
+
+
+    private Location findLocation(long id) {
+        return favoriteLocations
+                .stream()
+                .filter(n -> n.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Location not found: " + id));
+    }
+
 }

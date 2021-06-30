@@ -6,7 +6,8 @@ Accept: application/json
 POST http://localhost:8080/api/locations/
 Content-Type: application/json
 
-{"name": "Nem-Xuzhou",
+{
+  "name": "Nem-Xuzhou",
   "lat": 16.12,
   "lon": 18.23
 }
@@ -14,3 +15,13 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/api/locations?prefix=Nem-Xuzhou
 Accept: application/json
+
+###
+PUT http://localhost:8080/api/locations/1
+Content-Type: application/json
+
+{
+  "name":"Abalala",
+  "lat": 10000,
+  "lon": ""
+}
