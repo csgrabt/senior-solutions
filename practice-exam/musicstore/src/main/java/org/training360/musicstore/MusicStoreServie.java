@@ -5,6 +5,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -20,15 +21,29 @@ public class MusicStoreServie {
 
     }
 
-    public List<InstrumentDto> instruments(Optional<Map<String, Double>> prefix) {
-        Type targetListType = new TypeToken<List<InstrumentDto>>() {
+    public List<InstrumentDTO> instruments(Optional<String> prefix, Optional<Double> prefix2) {
+        Type targetListType = new TypeToken<List<InstrumentDTO>>() {
         }.getType();
 
-    List<Instrument> filtered = instruments
-            .stream()
-            .filter(n-> prefix.isEmpty())
-            .collect(Collectors.toList());
-    return modelMapper.map(filtered, targetListType);
+        List<Instrument> filtered = instruments
+                .stream()
+                .filter(n -> prefix.isEmpty())
+                .collect(Collectors.toList());
+        return modelMapper.map(filtered, targetListType);
+
+    }
+
+    public InstrumentDTO createInstrument(CreateInstrumentCommand command) {
+        Instrument instrument = new Instrument(
+                idGenerator.incrementAndGet(),
+                command.getBrand(),
+                command.getType(),
+                command.getPrice(),
+                LocalDate.now()
+        );
+        instruments.add(instrument);
+
+        return modelMapper.map(instrument, InstrumentDTO.class);
 
     }
 }

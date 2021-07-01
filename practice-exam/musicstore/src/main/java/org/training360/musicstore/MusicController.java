@@ -1,12 +1,11 @@
 package org.training360.musicstore;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.awt.event.WindowStateListener;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,8 +17,15 @@ public class MusicController {
         this.musicStoreServie = musicStoreServie;
     }
     @GetMapping
-    public List<InstrumentDto> listEmployees(@RequestParam Optional<Map<String, Double>> prefix) {
-        return musicStoreServie.instruments(prefix);
+    public List<InstrumentDTO> listInstruments(@RequestParam Optional<String> prefix, @RequestParam Optional<Double> prefix2 ) {
+        return musicStoreServie.instruments(prefix, prefix2);
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public InstrumentDTO createInstrument(@Valid @RequestBody CreateInstrumentCommand command) {
+        return musicStoreServie.createInstrument(command);
+    }
+
 
 }
