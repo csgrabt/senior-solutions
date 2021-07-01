@@ -16,8 +16,9 @@ public class MusicController {
     public MusicController(MusicStoreServie musicStoreServie) {
         this.musicStoreServie = musicStoreServie;
     }
+
     @GetMapping
-    public List<InstrumentDTO> listInstruments(@RequestParam Optional<String> prefix, @RequestParam Optional<Double> prefix2 ) {
+    public List<InstrumentDTO> listInstruments(@RequestParam Optional<String> prefix, @RequestParam Optional<Double> prefix2) {
         return musicStoreServie.instruments(prefix, prefix2);
     }
 
@@ -27,5 +28,9 @@ public class MusicController {
         return musicStoreServie.createInstrument(command);
     }
 
+    @DeleteMapping
+    public void deleteInstruments() {
+        musicStoreServie.deleteAllInstruments();
+    }
 
 }
