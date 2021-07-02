@@ -33,4 +33,9 @@ public class MusicController {
         musicStoreServie.deleteAllInstruments();
     }
 
+
+    @GetMapping("/{id}")
+    public InstrumentDTO findEmployeeById(@PathVariable("id") long id) {
+        return musicStoreServie.findInstrumentById(id);
+    }
 }

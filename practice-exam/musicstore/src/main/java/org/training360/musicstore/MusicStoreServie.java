@@ -51,4 +51,14 @@ public class MusicStoreServie {
     public void deleteAllInstruments() {
         instruments.clear();
     }
+
+    public InstrumentDTO findInstrumentById(long id) {
+        Instrument instrument =
+                instruments
+                        .stream()
+                        .filter(n -> n.getId() == id)
+                        .findAny()
+                        .orElseThrow(()-> new IllegalArgumentException("Instrument not found"));
+        return modelMapper.map(instrument, InstrumentDTO.class);
+    }
 }

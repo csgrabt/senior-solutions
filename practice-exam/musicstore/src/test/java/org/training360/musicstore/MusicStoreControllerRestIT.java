@@ -93,13 +93,13 @@ public class MusicStoreControllerRestIT {
 //
 //
 //
-//    @Test
-//    void testInstrumentNotFound(){
-//        Problem result = template.getForObject("/api/instruments/1", Problem.class);
-//
-//        assertEquals(URI.create("instruments/not-found"),result.getType());
-//        assertEquals(Status.NOT_FOUND, result.getStatus());
-//    }
+    @Test
+    void testInstrumentNotFound(){
+        Problem result = template.getForObject("/api/instruments/1", Problem.class);
+
+        assertEquals(URI.create("instruments/not-found"),result.getType());
+        assertEquals(Status.NOT_FOUND, result.getStatus());
+    }
 //
     @Test
     void testCreateWithInvalidName(){
