@@ -1,4 +1,4 @@
-GET http://localhost:8080/api/instruments?prefix=Alma
+GET http://localhost:8080/api/instruments?prefix=Alma&prefix2=1500
 Accept: application/json
 
 ###
