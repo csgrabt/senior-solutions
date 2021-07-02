@@ -101,24 +101,24 @@ public class MusicStoreControllerRestIT {
 //        assertEquals(Status.NOT_FOUND, result.getStatus());
 //    }
 //
-//    @Test
-//    void testCreateWithInvalidName(){
-//        Problem result = template.postForObject("/api/instruments",
-//                new CreateInstrumentCommand("", InstrumentType.ELECTRIC_GUITAR, 2000),
-//                Problem.class);
-//        assertEquals(Status.BAD_REQUEST, result.getStatus());
-//
-//
-//    }
-//
-//    @Test
-//    void testCreateWithInvalidPrice(){
-//        Problem result = template.postForObject("/api/instruments",
-//                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, -2000),
-//                Problem.class);
-//        assertEquals(Status.BAD_REQUEST, result.getStatus());
-//
-//    }
+    @Test
+    void testCreateWithInvalidName(){
+        Problem result = template.postForObject("/api/instruments",
+                new CreateInstrumentCommand("", InstrumentType.ELECTRIC_GUITAR, 2000),
+                Problem.class);
+        assertEquals(Status.BAD_REQUEST, result.getStatus());
+
+
+    }
+
+    @Test
+    void testCreateWithInvalidPrice(){
+        Problem result = template.postForObject("/api/instruments",
+                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, -2000),
+                Problem.class);
+        assertEquals(Status.BAD_REQUEST, result.getStatus());
+
+    }
 
 }
 
