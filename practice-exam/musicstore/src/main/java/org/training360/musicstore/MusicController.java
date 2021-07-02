@@ -49,6 +49,10 @@ public class MusicController {
         return musicStoreServie.updateInstrument(id, command);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteInstrument(@PathVariable("id") long id) {
+        musicStoreServie.deleteAllInstrument(id);
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

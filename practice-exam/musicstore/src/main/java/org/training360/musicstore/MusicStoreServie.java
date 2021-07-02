@@ -75,4 +75,9 @@ public class MusicStoreServie {
         }
         return modelMapper.map(instrument, InstrumentDTO.class);
     }
+
+    public void deleteAllInstrument(long id) {
+        Instrument instrument = getInstrument(id);
+        instruments.remove(instrument);
+    }
 }
