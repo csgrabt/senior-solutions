@@ -50,6 +50,7 @@ public class MusicStoreServie {
 
     public void deleteAllInstruments() {
         instruments.clear();
+        idGenerator = new AtomicLong();
     }
 
     public InstrumentDTO findInstrumentById(long id) {
@@ -67,6 +68,11 @@ public class MusicStoreServie {
     }
 
     public InstrumentDTO updateInstrument(long id, UpdatePriceCommand command) {
-        return null;
+        Instrument instrument = getInstrument(id);
+        if (instrument.getPrice() != command.getPrice()) {
+            instrument.setPrice(command.getPrice());
+            instrument.setPostDate(LocalDate.now());
+        }
+        return modelMapper.map(instrument, InstrumentDTO.class);
     }
 }

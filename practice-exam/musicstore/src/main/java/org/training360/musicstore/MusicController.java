@@ -44,6 +44,12 @@ public class MusicController {
         return musicStoreServie.findInstrumentById(id);
     }
 
+    @PutMapping("/{id}")
+    public InstrumentDTO updateInstrument(@PathVariable("id") long id, @Valid @RequestBody UpdatePriceCommand command) {
+        return musicStoreServie.updateInstrument(id, command);
+    }
+
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Problem> handleNotFound(IllegalArgumentException iae) {
