@@ -74,25 +74,25 @@ public class MusicStoreControllerRestIT {
                 .containsExactly("Fender","Gibson");
 
     }
-//
-//    @Test
-//    void testUpdateInstrumentPrice(){
-//
-//        template.postForObject("/api/instruments",
-//                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, 2000),
-//                InstrumentDTO.class);
-//
-//
-//        template.put("/api/instruments/1", new UpdatePriceCommand(1000));
-//
-//        InstrumentDTO result = template.getForObject("/api/instruments/1",InstrumentDTO.class);
-//
-//        assertEquals(1000,result.getPrice());
-//
-//    }
-//
-//
-//
+
+    @Test
+    void testUpdateInstrumentPrice(){
+
+        template.postForObject("/api/instruments",
+                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, 2000),
+                InstrumentDTO.class);
+
+
+        template.put("/api/instruments/1", new UpdatePriceCommand(1000));
+
+        InstrumentDTO result = template.getForObject("/api/instruments/1",InstrumentDTO.class);
+
+        assertEquals(1000,result.getPrice());
+
+    }
+
+
+
     @Test
     void testInstrumentNotFound(){
         Problem result = template.getForObject("/api/instruments/1", Problem.class);

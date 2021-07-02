@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateInstrumentCommand {
+public class UpdatePriceCommand {
     @Positive
     private double price;
 }
