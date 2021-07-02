@@ -54,11 +54,19 @@ public class MusicStoreServie {
 
     public InstrumentDTO findInstrumentById(long id) {
         Instrument instrument =
-                instruments
-                        .stream()
-                        .filter(n -> n.getId() == id)
-                        .findAny()
-                        .orElseThrow(()-> new IllegalArgumentException("Instrument not found"));
+                getInstrument(id);
         return modelMapper.map(instrument, InstrumentDTO.class);
+    }
+
+    private Instrument getInstrument(long id) {
+        return instruments
+                .stream()
+                .filter(n -> n.getId() == id)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Instrument not found"));
+    }
+
+    public InstrumentDTO updateInstrument(long id, UpdatePriceCommand command) {
+        return null;
     }
 }
