@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 @SpringBootApplication
 public class MusicstoreApplication {
 
@@ -21,5 +23,10 @@ public class MusicstoreApplication {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper().findAndRegisterModules();
+    }
+
+    @Bean
+    public AtomicLong atomicLong() {
+        return new AtomicLong();
     }
 }

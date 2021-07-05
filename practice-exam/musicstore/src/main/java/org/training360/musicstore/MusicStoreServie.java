@@ -13,24 +13,23 @@ import java.util.stream.Collectors;
 @Service
 public class MusicStoreServie {
     private ModelMapper modelMapper;
-    private AtomicLong idGenerator = new AtomicLong();
+    private AtomicLong idGenerator;
     private List<Instrument> instruments = Collections.synchronizedList(new ArrayList<>());
 
-    public MusicStoreServie(ModelMapper modelMapper) {
+    public MusicStoreServie(ModelMapper modelMapper, AtomicLong idGenerator) {
         this.modelMapper = modelMapper;
-
+        this.idGenerator = idGenerator;
     }
 
-    public List<InstrumentDTO> instruments(Optional<String> prefix, Optional<Double> prefix2) {
-        Type targetListType = new TypeToken<List<InstrumentDTO>>() {
-        }.getType();
 
-        List<Instrument> filtered = instruments
+    public List<InstrumentDTO> instruments(Optional<String> prefix, Optional<Double> prefix2) {
+        return instruments
                 .stream()
                 .filter(n -> prefix.isEmpty() || n.getBrand().equalsIgnoreCase(prefix.get()))
                 .filter(n -> prefix2.isEmpty() || n.getPrice() == prefix2.get())
+                .map(i -> modelMapper.map(i, InstrumentDTO.class))
                 .collect(Collectors.toList());
-        return modelMapper.map(filtered, targetListType);
+
 
     }
 
@@ -50,7 +49,7 @@ public class MusicStoreServie {
 
     public void deleteAllInstruments() {
         instruments.clear();
-        idGenerator = new AtomicLong();
+        idGenerator.set(0);
     }
 
     public InstrumentDTO findInstrumentById(long id) {

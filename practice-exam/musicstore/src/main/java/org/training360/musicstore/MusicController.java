@@ -68,8 +68,5 @@ public class MusicController {
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .body(problem);
-
     }
-
-
 }
