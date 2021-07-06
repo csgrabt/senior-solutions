@@ -56,12 +56,12 @@ public class EmployeesController {
 
 
     @DeleteMapping("/{id}")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable("id") long id) {
         employeesService.deleteEmployee(id);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Problem> handleNotFound(IllegalArgumentException iae) {
         Problem problem =

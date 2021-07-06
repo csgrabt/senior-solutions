@@ -1,6 +1,7 @@
 package location;
 
 
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +42,6 @@ class DistanceServiceTest {
         Optional<Double> result = distanceService.calculateDistance("A", "B");
 
         assertEquals(6481, result.get(), 10);
-
     }
 
 

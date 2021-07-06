@@ -1,6 +1,7 @@
 package org.training360.musicstore;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,11 +29,11 @@ public class MusicStoreControllerRestIT {
     TestRestTemplate template;
 
     @BeforeEach
-    void init(){
+    void init() {
         template.delete("/api/instruments");
     }
 
-
+    @Order(1)
     @Test
     void testAddNewInstruments() {
 
@@ -71,12 +72,12 @@ public class MusicStoreControllerRestIT {
 
         assertThat(result)
                 .extracting(InstrumentDTO::getBrand)
-                .containsExactly("Fender","Gibson");
+                .containsExactly("Fender", "Gibson");
 
     }
 
     @Test
-    void testUpdateInstrumentPrice(){
+    void testUpdateInstrumentPrice() {
 
         template.postForObject("/api/instruments",
                 new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, 2000),
@@ -85,24 +86,23 @@ public class MusicStoreControllerRestIT {
 
         template.put("/api/instruments/1", new UpdatePriceCommand(1000));
 
-        InstrumentDTO result = template.getForObject("/api/instruments/1",InstrumentDTO.class);
+        InstrumentDTO result = template.getForObject("/api/instruments/1", InstrumentDTO.class);
 
-        assertEquals(1000,result.getPrice());
+        assertEquals(1000, result.getPrice());
 
     }
 
 
-
     @Test
-    void testInstrumentNotFound(){
+    void testInstrumentNotFound() {
         Problem result = template.getForObject("/api/instruments/1", Problem.class);
 
-        assertEquals(URI.create("instruments/not-found"),result.getType());
+        assertEquals(URI.create("instruments/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());
     }
-//
+
     @Test
-    void testCreateWithInvalidName(){
+    void testCreateWithInvalidName() {
         Problem result = template.postForObject("/api/instruments",
                 new CreateInstrumentCommand("", InstrumentType.ELECTRIC_GUITAR, 2000),
                 Problem.class);
@@ -112,12 +112,11 @@ public class MusicStoreControllerRestIT {
     }
 
     @Test
-    void testCreateWithInvalidPrice(){
+    void testCreateWithInvalidPrice() {
         Problem result = template.postForObject("/api/instruments",
                 new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, -2000),
                 Problem.class);
         assertEquals(Status.BAD_REQUEST, result.getStatus());
-
     }
 
 }
