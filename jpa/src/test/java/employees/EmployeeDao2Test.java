@@ -12,8 +12,11 @@ import javax.persistence.Persistence;
 
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 class EmployeeDao2Test {
 
@@ -47,4 +50,39 @@ class EmployeeDao2Test {
         assertEquals("John Doe", loadedEmployee.getName());
     }
 
+
+    @Test
+    void testSaveTheListAll() {
+        employeeDao.saveEmployee(new Employee("Jane Doe"));
+        employeeDao.saveEmployee(new Employee("John Doe"));
+        employeeDao.saveEmployee(new Employee("Jack Doe"));
+
+        List<Employee> employees = employeeDao.listAll();
+
+        assertEquals(List.of("Jack Doe", "Jane Doe", "John Doe"),
+                employees.stream().map(Employee::getName).collect(Collectors.toList()));
+    }
+
+    @Test
+    void testChangeName() {
+        Employee employee = new Employee("John Doe");
+        employeeDao.saveEmployee(employee);
+        long id = employee.getId();
+        employeeDao.changeName(id, "Jane Doe");
+        Employee anotherEmployee = employeeDao.findEmployeeById(id);
+        assertEquals("Jane Doe", anotherEmployee.getName());
+    }
+
+    @Test
+    void testDelete() {
+        Employee employee = new Employee("John Doe");
+        employeeDao.saveEmployee(employee);
+        long id = employee.getId();
+
+        employeeDao.deleteEntity(id);
+
+        List<Employee> employees = employeeDao.listAll();
+
+        assertTrue(employees.isEmpty());
+    }
 }
