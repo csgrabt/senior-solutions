@@ -2,22 +2,23 @@ package jpa;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "employees")
+//@IdClass(EmployeeId.class)
 public class Employee {
     public enum EmployeeType {FULL_TIME, HALF_TIME}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private EmployeeId employeeId;
 
     @Column(name = "emp_name", length = 200, nullable = false)
     private String name;
@@ -31,17 +32,10 @@ public class Employee {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public EmployeeType getEmployeeType() {
         return employeeType;
     }
 
-    public void setEmployeeType(EmployeeType employeeType) {
-        this.employeeType = employeeType;
-    }
 
     public Employee(String name, EmployeeType employeeType, LocalDate dateOfBirth) {
         this.name = name;
@@ -49,23 +43,14 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
+
+    public Employee(EmployeeId employeeId, String name) {
+        this.employeeId = employeeId;
+        this.name = name;
+    }
+
     public Employee(String name) {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

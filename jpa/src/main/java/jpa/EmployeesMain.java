@@ -15,7 +15,7 @@ public class EmployeesMain {
         em.persist(employee);
         em.getTransaction().commit();
 
-        System.out.println(employee.getId());
+    /*    System.out.println(employee.getId());
 
         long id = employee.getId();
 
@@ -42,7 +42,7 @@ public class EmployeesMain {
         System.out.println(employees1);
 
         em.close();
-        factory.close();
+        factory.close();*/
 
     }
 }

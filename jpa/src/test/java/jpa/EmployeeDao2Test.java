@@ -23,6 +23,9 @@ class EmployeeDao2Test {
 
     private EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
     private MariaDbDataSource dataSource = new MariaDbDataSource();
+    EmployeeId employeeId;
+    EmployeeId employeeId2;
+
     private Flyway flyway;
 
     @BeforeEach
@@ -38,63 +41,66 @@ class EmployeeDao2Test {
         flyway.setDataSource(dataSource);
         flyway.clean();
         flyway.migrate();*/
-
+employeeId = new EmployeeId("x", 1L);
+employeeId2 = new EmployeeId("x", 2L);
     }
 
     @Test
     void testSaveThenFind() {
-        Employee employee = new Employee("John Doe");
+        Employee employee = new Employee(employeeId, "John Doe");
         employeeDao.saveEmployee(employee);
         Employee loadedEmployee = employeeDao
-                .findEmployeeById(employee.getId());
+                .findEmployeeById(employeeId);
         assertEquals("John Doe", loadedEmployee.getName());
     }
 
 
     @Test
     void testSaveTheListAll() {
-        employeeDao.saveEmployee(new Employee("Jane Doe"));
-        employeeDao.saveEmployee(new Employee("John Doe"));
-        employeeDao.saveEmployee(new Employee("Jack Doe"));
+        employeeDao.saveEmployee(new Employee(employeeId, "Jane Doe"));
+        employeeDao.saveEmployee(new Employee(employeeId2, "John Doe"));
+
 
         List<Employee> employees = employeeDao.listAll();
 
-        assertEquals(List.of("Jack Doe", "Jane Doe", "John Doe"),
+        assertEquals(List.of("Jane Doe", "John Doe"),
                 employees.stream().map(Employee::getName).collect(Collectors.toList()));
     }
 
     @Test
     void testChangeName() {
-        Employee employee = new Employee("John Doe");
+        Employee employee = new Employee(employeeId, "John Doe");
         employeeDao.saveEmployee(employee);
-        long id = employee.getId();
-        employeeDao.changeName(id, "Jane Doe");
-        Employee anotherEmployee = employeeDao.findEmployeeById(id);
+        EmployeeId employeeIdBack = employee.getEmployeeId();
+        employeeDao.changeName(employeeIdBack, "Jane Doe");
+        Employee anotherEmployee = employeeDao.findEmployeeById(employeeIdBack);
         assertEquals("Jane Doe", anotherEmployee.getName());
     }
 
     @Test
     void testDelete() {
-        Employee employee = new Employee("John Doe");
+        Employee employee = new Employee(employeeId, "John Doe");
         employeeDao.saveEmployee(employee);
-        long id = employee.getId();
+        EmployeeId employeeIdBack = employee.getEmployeeId();
 
-        employeeDao.deleteEntity(id);
+        employeeDao.deleteEntity(employeeIdBack);
 
         List<Employee> employees = employeeDao.listAll();
 
         assertTrue(employees.isEmpty());
     }
 
-    @Test
+ /*   @Test
     void testEmployeeWithAttributes() {
-        employeeDao.saveEmployee(new Employee("John Doe", Employee.EmployeeType.HALF_TIME, LocalDate.of(2000, 01, 01)));
+        for (int i = 0; i < 10; i++) {
+            employeeDao.saveEmployee(new Employee("John Doe", Employee.EmployeeType.HALF_TIME, LocalDate.of(2000, 01, 01)));
+        }
 
         Employee employee = employeeDao.listAll().get(0);
 
-        assertEquals(LocalDate.of(2000,01,01), employee.getDateOfBirth());
+        assertEquals(LocalDate.of(2000, 01, 01), employee.getDateOfBirth());
 
-    }
+    }*/
 
 
 }
