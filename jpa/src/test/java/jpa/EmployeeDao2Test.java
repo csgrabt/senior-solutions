@@ -1,4 +1,4 @@
-package employees;
+package jpa;
 
 
 import org.flywaydb.core.Flyway;
@@ -11,7 +11,7 @@ import org.mariadb.jdbc.MariaDbDataSource;
 import javax.persistence.Persistence;
 
 
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +27,7 @@ class EmployeeDao2Test {
 
     @BeforeEach
     void init() {
-        try {
+      /*  try {
             dataSource.setUrl("jdbc:mariadb://localhost:3306/Employees?useUnicode=true");
             dataSource.setUser("employees");
             dataSource.setPassword("employees");
@@ -37,7 +37,7 @@ class EmployeeDao2Test {
         flyway = new Flyway();
         flyway.setDataSource(dataSource);
         flyway.clean();
-        flyway.migrate();
+        flyway.migrate();*/
 
     }
 
@@ -85,4 +85,16 @@ class EmployeeDao2Test {
 
         assertTrue(employees.isEmpty());
     }
+
+    @Test
+    void testEmployeeWithAttributes() {
+        employeeDao.saveEmployee(new Employee("John Doe", Employee.EmployeeType.HALF_TIME, LocalDate.of(2000, 01, 01)));
+
+        Employee employee = employeeDao.listAll().get(0);
+
+        assertEquals(LocalDate.of(2000,01,01), employee.getDateOfBirth());
+
+    }
+
+
 }
