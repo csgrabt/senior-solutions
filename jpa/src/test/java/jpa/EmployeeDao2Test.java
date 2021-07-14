@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -123,4 +124,16 @@ class EmployeeDao2Test {
         assertEquals("Jack Doe", employee1.getName());
     }
 
+
+    @Test
+    void testNicknames() {
+        Employee employee = new Employee(employeeId, "John Doe");
+        employee.setNicknames(Set.of("Béla", "Géza", "HurrikánJó"));
+        employeeDao.saveEmployee(employee);
+        Employee employee1 = new Employee(employeeId2, "Jack Doe");
+        employee1.setNicknames(Set.of("Béla1", "Géza1", "HurrikánJó1"));
+        employeeDao.saveEmployee(employee1);
+        Employee anotherEmployee = employeeDao.findEmployeeByIdWithNicknames(employeeId);
+        System.out.println(anotherEmployee.getNicknames());
+    }
 }

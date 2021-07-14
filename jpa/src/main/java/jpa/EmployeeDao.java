@@ -63,4 +63,15 @@ public class EmployeeDao {
         em.getTransaction().commit();
         em.close();
     }
+
+    public Employee findEmployeeByIdWithNicknames(EmployeeId employeeId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Employee employee = em.createQuery(
+                "select e from Employee e join fetch e.nicknames where id = :id and depName = :depName", Employee.class
+        ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
+                .getSingleResult();
+        em.close();
+        return employee;
+    }
+
 }
