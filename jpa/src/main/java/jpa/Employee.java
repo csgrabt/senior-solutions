@@ -17,6 +17,11 @@ import java.time.LocalDate;
 public class Employee {
     public enum EmployeeType {FULL_TIME, HALF_TIME}
 
+    @PostPersist
+    public void debugPersist() {
+        System.out.printf(name + "" + employeeId.getId());
+    }
+
     @EmbeddedId
     private EmployeeId employeeId;
 
