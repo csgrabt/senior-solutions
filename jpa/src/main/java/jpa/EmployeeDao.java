@@ -55,4 +55,12 @@ public class EmployeeDao {
         em.close();
 
     }
+
+    public void updateEmployee(Employee employee) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(employee);
+        em.getTransaction().commit();
+        em.close();
+    }
 }

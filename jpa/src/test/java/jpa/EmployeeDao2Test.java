@@ -1,6 +1,7 @@
 package jpa;
 
 
+import kotlin.jvm.internal.MutablePropertyReference0;
 import org.flywaydb.core.Flyway;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -41,8 +42,8 @@ class EmployeeDao2Test {
         flyway.setDataSource(dataSource);
         flyway.clean();
         flyway.migrate();*/
-employeeId = new EmployeeId("x", 1L);
-employeeId2 = new EmployeeId("x", 2L);
+        employeeId = new EmployeeId("x", 1L);
+        employeeId2 = new EmployeeId("x", 2L);
     }
 
     @Test
@@ -90,17 +91,36 @@ employeeId2 = new EmployeeId("x", 2L);
         assertTrue(employees.isEmpty());
     }
 
- /*   @Test
+    @Test
     void testEmployeeWithAttributes() {
         for (int i = 0; i < 10; i++) {
-            employeeDao.saveEmployee(new Employee("John Doe", Employee.EmployeeType.HALF_TIME, LocalDate.of(2000, 01, 01)));
+            employeeDao.saveEmployee(new Employee(new EmployeeId("x" + i, 1L), "John Doe", Employee.EmployeeType.HALF_TIME, LocalDate.of(2000, 01, 01)));
         }
 
         Employee employee = employeeDao.listAll().get(0);
 
         assertEquals(LocalDate.of(2000, 01, 01), employee.getDateOfBirth());
 
-    }*/
+    }
 
+    @Test
+    void testSaveEmployeeChangeState() {
+        Employee employee = new Employee(employeeId, "John Doe");
+        employeeDao.saveEmployee(employee);
+        employee.setName("Jack Doe");
+
+        Employee employee1 = employeeDao.findEmployeeById(employeeId);
+
+    }
+
+    @Test
+    void testMerge() {
+        Employee employee = new Employee(employeeId, "John Doe");
+        employeeDao.saveEmployee(employee);
+        employee.setName("Jack Doe");
+        employeeDao.updateEmployee(employee);
+        Employee employee1 = employeeDao.findEmployeeById(employeeId);
+        assertEquals("Jack Doe", employee1.getName());
+    }
 
 }
