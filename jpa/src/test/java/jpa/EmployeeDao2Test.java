@@ -24,8 +24,8 @@ import static org.junit.Assert.assertTrue;
 class EmployeeDao2Test {
 
 
-    private EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
-    private MariaDbDataSource dataSource = new MariaDbDataSource();
+     EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
+     MariaDbDataSource dataSource = new MariaDbDataSource();
     EmployeeId employeeId;
     EmployeeId employeeId2;
 

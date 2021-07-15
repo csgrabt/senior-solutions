@@ -39,6 +39,9 @@ public class Employee {
     @Column(name = "phone_number")
     private Map<String, String> phoneNumbers;
 
+    @OneToOne
+    private ParkingPlace parkingPlace;
+
     @PostPersist
     public void debugPersist() {
         System.out.printf(name + "" + employeeId.getId());
