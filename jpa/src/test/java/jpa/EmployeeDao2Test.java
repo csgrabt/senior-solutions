@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -130,10 +131,34 @@ class EmployeeDao2Test {
         Employee employee = new Employee(employeeId, "John Doe");
         employee.setNicknames(Set.of("Béla", "Géza", "HurrikánJó"));
         employeeDao.saveEmployee(employee);
-        Employee employee1 = new Employee(employeeId2, "Jack Doe");
-        employee1.setNicknames(Set.of("Béla1", "Géza1", "HurrikánJó1"));
-        employeeDao.saveEmployee(employee1);
         Employee anotherEmployee = employeeDao.findEmployeeByIdWithNicknames(employeeId);
-        System.out.println(anotherEmployee.getNicknames());
+        assertEquals(Set.of("Béla", "Géza", "HurrikánJó"), anotherEmployee.getNicknames());
     }
+
+    @Test
+    void testVacations() {
+        Employee employee = new Employee(employeeId, "Jack");
+
+        employee.setVacationBooking(Set.of(new VacationEntry(LocalDate.of(2020, 10, 10), 10), new VacationEntry(LocalDate.of(2018, 05, 02), 2)
+        ));
+        employeeDao.saveEmployee(employee);
+
+        Employee anotherEmployee = employeeDao.findEmployeeByIdWithVacations(employeeId);
+
+        assertEquals(Set.of(new VacationEntry(LocalDate.of(2020, 10, 10), 10), new VacationEntry(LocalDate.of(2018, 05, 02), 2)
+        ), anotherEmployee.getVacationBooking());
+    }
+
+    @Test
+    void testPhoneNumbers() {
+        Employee employee = new Employee(employeeId, "Jack Doe");
+        employee.setPhoneNumbers(Map.of("Home", "1234", "Work", "4321", "A", "23"));
+        employeeDao.saveEmployee(employee);
+        Employee employeeAnother = employeeDao.findEmployeeByIdWithPhoneNumbers(employee.getEmployeeId());
+
+    assertEquals(Map.of("Home", "1234", "Work", "4321", "A", "23"), employeeAnother.getPhoneNumbers());
+
+    }
+
+
 }

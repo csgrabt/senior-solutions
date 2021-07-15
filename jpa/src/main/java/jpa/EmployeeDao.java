@@ -74,4 +74,23 @@ public class EmployeeDao {
         return employee;
     }
 
+    public Employee findEmployeeByIdWithVacations(EmployeeId employeeId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Employee employee = em.createQuery(
+                "select e from Employee e join fetch e.vacationBooking where id = :id and depName = :depName", Employee.class
+        ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
+                .getSingleResult();
+        em.close();
+        return employee;
+    }
+
+    public Employee findEmployeeByIdWithPhoneNumbers(EmployeeId employeeId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Employee employee = em.createQuery(
+                "select e from Employee e join fetch e.phoneNumbers where id = :id and depName = :depName", Employee.class
+        ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
+                .getSingleResult();
+        em.close();
+        return employee;
+    }
 }

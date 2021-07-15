@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -28,7 +29,15 @@ public class Employee {
     private EmployeeType employeeType = EmployeeType.FULL_TIME;
     private LocalDate dateOfBirth;
     @ElementCollection
+    @CollectionTable(name = "Nicknames")
     private Set<String> nicknames = new HashSet<>();
+    @ElementCollection
+    private Set<VacationEntry> vacationBooking;
+    @ElementCollection
+    @CollectionTable(name = "phone_numbers")
+    @MapKeyColumn(name = "phone_type")
+    @Column(name = "phone_number")
+    private Map<String, String> phoneNumbers;
 
     @PostPersist
     public void debugPersist() {
