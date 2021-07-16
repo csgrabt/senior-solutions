@@ -1,23 +1,14 @@
 package jpa;
 
-
-import kotlin.jvm.internal.MutablePropertyReference0;
 import org.flywaydb.core.Flyway;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mariadb.jdbc.MariaDbDataSource;
-
-
 import javax.persistence.Persistence;
-
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +16,7 @@ class EmployeeDao2Test {
 
 
     EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
+    ParkingPlaceDao parkingPlaceDao = new ParkingPlaceDao(Persistence.createEntityManagerFactory("pu"));
     MariaDbDataSource dataSource = new MariaDbDataSource();
     EmployeeId employeeId;
     EmployeeId employeeId2;
@@ -175,4 +167,38 @@ class EmployeeDao2Test {
         Employee anotherEmployee = employeeDao.findEmployeeByIdWithPhoneNumbers(employeeId);
 
     }
+
+    @Test
+    void testFindEmployeeByName() {
+        employeeDao.saveEmployee(new Employee(employeeId, "Béla"));
+        Employee employee = employeeDao.findEmployeeByName("Béla");
+
+        assertEquals("Béla", employee.getName());
+    }
+
+    @Test
+    void testPaging() {
+        for (int i = 100; i < 300; i++) {
+            Employee employee = new Employee(new EmployeeId("x", 1L + i), "John Doe " + i);
+            employeeDao.saveEmployee(employee);
+        }
+        List<Employee> employees = employeeDao.listEmployee(50, 20);
+        assertEquals("John Doe 150", employees.get(0).getName());
+        assertEquals(20, employees.size());
+
+
+    }
+
+    @Test
+    void testFindNumber() {
+        Employee employee = new Employee(employeeId, "Géza");
+        ParkingPlace parkingplace = new ParkingPlace(250);
+        parkingPlaceDao.saveParkingPlace(parkingplace);
+        employee.setParkingPlace(parkingplace);
+        employeeDao.saveEmployee(employee);
+        int i =
+                employeeDao.findParkingPlaceNumberByEmployeeName("Géza");
+        assertEquals(250, i);
+    }
+
 }

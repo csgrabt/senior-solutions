@@ -2,6 +2,9 @@ package jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class EmployeeDao {
@@ -102,7 +105,8 @@ public class EmployeeDao {
         em.getTransaction().commit();
         em.close();
     }
-//SELECT * FROM employees JOIN phone_numbers WHERE employees.depName = "x" AND employees.id = 1
+
+    //SELECT * FROM employees JOIN phone_numbers WHERE employees.depName = "x" AND employees.id = 1
     public Employee findEmployeeByIdWithPhoneNumbers(EmployeeId employeeId) {
         EntityManager em = entityManagerFactory.createEntityManager();
         Employee employee = em.createQuery(
@@ -112,4 +116,38 @@ public class EmployeeDao {
         em.close();
         return employee;
     }
+
+    public Employee findEmployeeByName(String name) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> c = cb.createQuery(Employee.class);
+        Root<Employee> emp = c.from(Employee.class);
+        c.select(emp).where(cb.equal(emp.get("name"), name));
+        Employee employee = em.createQuery(c).getSingleResult();
+        em.close();
+        return employee;
+
+    }
+
+    public List<Employee> listEmployee(int start, int maxResult) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Employee> employees = em.createNamedQuery("listEmployees", Employee.class)
+                .setFirstResult(start)
+                .setMaxResults(maxResult)
+                .getResultList();
+        em.close();
+        return employees;
+    }
+
+    public int findParkingPlaceNumberByEmployeeName(String name) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        int i = em.createQuery("select p.number from Employee e join e.parkingPlace p where e.name = :name ",
+                Integer.class)
+                .setParameter("name", name)
+                .getSingleResult();
+        em.close();
+        return i;
+    }
+
+
 }

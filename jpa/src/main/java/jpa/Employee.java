@@ -2,8 +2,6 @@ package jpa;
 
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -14,6 +12,7 @@ import java.util.*;
 @Entity
 @Table(name = "employees")
 //@IdClass(EmployeeId.class)
+@NamedQuery(name = "listEmployees", query = "select e from Employee e order by e.name")
 public class Employee {
     public enum EmployeeType {FULL_TIME, HALF_TIME}
 
