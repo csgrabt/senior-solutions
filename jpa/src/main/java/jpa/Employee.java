@@ -1,9 +1,7 @@
 package jpa;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -45,6 +43,8 @@ public class Employee {
     @OrderColumn(name = "pos")
     private List<PhoneNumber> phoneNumbers;
 
+    @ManyToMany(mappedBy = "employees")
+    private Set<Project> projects = new HashSet<>();
 
     @PostPersist
     public void debugPersist() {
