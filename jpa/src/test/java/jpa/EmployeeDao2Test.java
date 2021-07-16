@@ -24,8 +24,8 @@ import static org.junit.Assert.assertTrue;
 class EmployeeDao2Test {
 
 
-     EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
-     MariaDbDataSource dataSource = new MariaDbDataSource();
+    EmployeeDao employeeDao = new EmployeeDao(Persistence.createEntityManagerFactory("pu"));
+    MariaDbDataSource dataSource = new MariaDbDataSource();
     EmployeeId employeeId;
     EmployeeId employeeId2;
 
@@ -149,16 +149,30 @@ class EmployeeDao2Test {
         ), anotherEmployee.getVacationBooking());
     }
 
+    //  @Test
+    //  void testPhoneNumbers() {
+    //      Employee employee = new Employee(employeeId, "Jack Doe");
+    //      employee.setPhoneNumbers(Map.of("Home", "1234", "Work", "4321", "A", "23"));
+    //      employeeDao.saveEmployee(employee);
+    //      Employee employeeAnother = employeeDao.findEmployeeByIdWithPhoneNumbers(employee.getEmployeeId());
+
+    //  assertEquals(Map.of("Home", "1234", "Work", "4321", "A", "23"), employeeAnother.getPhoneNumbers());
+
+    //  }
+
     @Test
     void testPhoneNumbers() {
-        Employee employee = new Employee(employeeId, "Jack Doe");
-        employee.setPhoneNumbers(Map.of("Home", "1234", "Work", "4321", "A", "23"));
-        employeeDao.saveEmployee(employee);
-        Employee employeeAnother = employeeDao.findEmployeeByIdWithPhoneNumbers(employee.getEmployeeId());
+        PhoneNumber phoneNumber = new PhoneNumber("Home", "1234");
+        PhoneNumber phoneNumber1 = new PhoneNumber("Work", "4321");
 
-    assertEquals(Map.of("Home", "1234", "Work", "4321", "A", "23"), employeeAnother.getPhoneNumbers());
+        Employee employee = new Employee(employeeId, "John Doe");
+        employee.addPhoneNumber(phoneNumber, phoneNumber1);
+
+        employeeDao.saveEmployee(employee);
+
+        employeeDao.addPhoneNumber(employeeId, new PhoneNumber("Alma", "9874"));
+
+        Employee anotherEmployee = employeeDao.findEmployeeByIdWithPhoneNumbers(employeeId);
 
     }
-
-
 }

@@ -67,7 +67,7 @@ public class EmployeeDao {
     public Employee findEmployeeByIdWithNicknames(EmployeeId employeeId) {
         EntityManager em = entityManagerFactory.createEntityManager();
         Employee employee = em.createQuery(
-                "select e from Employee e join fetch e.nicknames where id = :id and depName = :depName", Employee.class
+                "select e from Employee e join fetch e.nicknames where e.employeeId.id = :id and e.employeeId.depName = :depName", Employee.class
         ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
                 .getSingleResult();
         em.close();
@@ -77,17 +77,36 @@ public class EmployeeDao {
     public Employee findEmployeeByIdWithVacations(EmployeeId employeeId) {
         EntityManager em = entityManagerFactory.createEntityManager();
         Employee employee = em.createQuery(
-                "select e from Employee e join fetch e.vacationBooking where id = :id and depName = :depName", Employee.class
+                "select e from Employee e join fetch e.vacationBooking where e.employeeId.id = :id and e.employeeId.depName = :depName", Employee.class
         ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
                 .getSingleResult();
         em.close();
         return employee;
     }
 
+    //  public Employee findEmployeeByIdWithPhoneNumbers(EmployeeId employeeId) {
+    //      EntityManager em = entityManagerFactory.createEntityManager();
+    //      Employee employee = em.createQuery(
+    //              "select e from Employee e join fetch e.phoneNumbers where id = :id and depName = :depName", Employee.class
+    //      ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
+    //              .getSingleResult();
+    //      em.close();
+    //      return employee;
+    //  }
+
+    public void addPhoneNumber(EmployeeId employeeId, PhoneNumber phoneNumber) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        Employee employee = em.find(Employee.class, employeeId);
+        employee.addPhoneNumber(phoneNumber);
+        em.getTransaction().commit();
+        em.close();
+    }
+//SELECT * FROM employees JOIN phone_numbers WHERE employees.depName = "x" AND employees.id = 1
     public Employee findEmployeeByIdWithPhoneNumbers(EmployeeId employeeId) {
         EntityManager em = entityManagerFactory.createEntityManager();
         Employee employee = em.createQuery(
-                "select e from Employee e join fetch e.phoneNumbers where id = :id and depName = :depName", Employee.class
+                "select e from Employee e join fetch e.phoneNumbers where e.employeeId.id = :id and e.employeeId.depName = :depName", Employee.class
         ).setParameter("id", employeeId.getId()).setParameter("depName", employeeId.getDepName())
                 .getSingleResult();
         em.close();

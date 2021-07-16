@@ -4,12 +4,11 @@ package jpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -33,14 +32,19 @@ public class Employee {
     private Set<String> nicknames = new HashSet<>();
     @ElementCollection
     private Set<VacationEntry> vacationBooking;
-    @ElementCollection
-    @CollectionTable(name = "phone_numbers")
-    @MapKeyColumn(name = "phone_type")
-    @Column(name = "phone_number")
-    private Map<String, String> phoneNumbers;
-
+    // @ElementCollection
+    // @CollectionTable(name = "phone_numbers")
+    // @MapKeyColumn(name = "phone_type")
+    // @Column(name = "phone_number")
+    // private Map<String, String> phoneNumbers;
     @OneToOne
     private ParkingPlace parkingPlace;
+
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "employee")
+    //@OrderBy("type")
+    @OrderColumn(name = "pos")
+    private List<PhoneNumber> phoneNumbers;
+
 
     @PostPersist
     public void debugPersist() {
@@ -70,4 +74,18 @@ public class Employee {
         this.employeeType = employeeType;
         this.dateOfBirth = dateOfBirth;
     }
+
+
+    public void addPhoneNumber(PhoneNumber... phoneNumber) {
+        if (phoneNumbers == null) {
+            phoneNumbers = new ArrayList<>();
+        }
+        for (PhoneNumber item : phoneNumber
+        ) {
+            phoneNumbers.add(item);
+            item.setEmployee(this);
+
+        }
+    }
+
 }
