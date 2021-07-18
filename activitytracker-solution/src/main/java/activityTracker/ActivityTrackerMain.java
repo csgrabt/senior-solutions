@@ -19,6 +19,7 @@ public class ActivityTrackerMain {
         em.persist(activity);
         em.getTransaction().commit();
         em.close();
+        entityManagerFactory.close();
 
     }
 }
