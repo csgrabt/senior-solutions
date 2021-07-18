@@ -35,4 +35,13 @@ public class ActivityDao {
         em.close();
         return activityList;
     }
+
+    public void updateActivity(long id, String description) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        em.find(Activity.class, id).setDescription(description);
+        em.getTransaction().commit();
+        em.close();
+
+    }
 }

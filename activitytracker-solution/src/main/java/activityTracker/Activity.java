@@ -2,7 +2,6 @@ package activityTracker;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -26,5 +25,18 @@ public class Activity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ActivityType type;
+    private LocalDateTime creatAt;
+    private LocalDateTime updateAt;
 
+
+    @PrePersist
+    public void setCreatAt() {
+        this.setCreatAt(LocalDateTime.now());
+
+    }
+
+    @PreUpdate
+    public void setUpdateAt() {
+        this.setUpdateAt(LocalDateTime.now());
+    }
 }
