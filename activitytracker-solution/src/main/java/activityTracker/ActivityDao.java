@@ -44,4 +44,11 @@ public class ActivityDao {
         em.close();
 
     }
+
+    public Activity findActivityByIdWithLabels(long id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Activity activity = em.createQuery("select a from Activity a join fetch a.labels", Activity.class).getSingleResult();
+        em.close();
+        return activity;
+    }
 }

@@ -50,12 +50,22 @@ class ActivityDaoTest {
         activity.setStartTime(LocalDateTime.of(2022, 12, 10, 8, 12));
         activity.setType(ActivityType.HIKING);
         activityDao.saveActivity(activity);
-
-
-
         activityDao.updateActivity(activity.getId(), "Keresés a Bükkben");
         activityDao.findActivityById(activity.getId());
     }
+
+    @Test
+    void testFindActivityByIdWithLabels() {
+        Activity activity = new Activity();
+        activity.setDescription("Almafa keresés a Mátrában");
+        activity.setStartTime(LocalDateTime.of(2022, 12, 10, 8, 12));
+        activity.setType(ActivityType.HIKING);
+        activity.setLabels(List.of("Mátra", "Ősz", "Falevél"));
+        activityDao.saveActivity(activity);
+        Activity anotherActivity = activityDao.findActivityByIdWithLabels(activity.getId());
+        assertEquals(3, anotherActivity.getLabels().size());
+    }
+
 }
 
 
