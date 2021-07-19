@@ -47,7 +47,16 @@ public class ActivityDao {
 
     public Activity findActivityByIdWithLabels(long id) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        Activity activity = em.createQuery("select a from Activity a join fetch a.labels", Activity.class).getSingleResult();
+        Activity activity = em.createQuery("select a from Activity a join fetch a.labels", Activity.class)
+                .getSingleResult();
+        em.close();
+        return activity;
+    }
+
+    public Activity findActivityByIdWithTrackPoints(long id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Activity activity = em.createQuery("select a from Activity a join fetch a.trackPoints", Activity.class)
+                .getSingleResult();
         em.close();
         return activity;
     }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,6 +31,9 @@ public class Activity {
     private LocalDateTime updateAt;
     @ElementCollection
     private List<String> labels;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "activity")
+    @OrderBy("time")
+    private List<TrackPoint> trackPoints;
 
 
     @PrePersist
@@ -41,5 +45,17 @@ public class Activity {
     @PreUpdate
     public void setUpdateAt() {
         this.setUpdateAt(LocalDateTime.now());
+    }
+
+    public void addTrackPoint(TrackPoint... trackPoint) {
+        if (trackPoints == null) {
+            trackPoints = new ArrayList<>();
+        }
+
+        for (TrackPoint item : trackPoint
+        ) {
+            trackPoints.add(item);
+            item.setActivity(this);
+        }
     }
 }
