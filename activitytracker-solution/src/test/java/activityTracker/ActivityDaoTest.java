@@ -84,8 +84,8 @@ class ActivityDaoTest {
         activityDao.saveActivity(activity);
 
         Activity anotherActivity = activityDao.findActivityByIdWithTrackPoints(activity.getId());
-        System.out.println(anotherActivity.getTrackPoints());
 
+        assertEquals(1999, anotherActivity.getTrackPoints().get(0).getTime().getYear());
     }
 }
 

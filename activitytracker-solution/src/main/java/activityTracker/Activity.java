@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -34,6 +36,8 @@ public class Activity {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "activity")
     @OrderBy("time")
     private List<TrackPoint> trackPoints;
+    @ManyToMany(mappedBy = "activityList", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<Area> areaList = new HashSet<>();
 
 
     @PrePersist

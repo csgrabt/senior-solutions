@@ -60,4 +60,13 @@ public class ActivityDao {
         em.close();
         return activity;
     }
+
+    public Activity findActivityByIdWithAreas(Long id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Activity activity = em.createQuery("select a from Activity a join fetch a.areaList where a.id = :id", Activity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        em.close();
+        return activity;
+    }
 }
