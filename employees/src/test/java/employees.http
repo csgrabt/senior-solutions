@@ -23,7 +23,7 @@ Accept: application/json
 }
 
 ###
-DELETE http://localhost:8080/api/employees/1
+DELETE http://localhost:8080/api/employees/2
 
 ### Validation
 

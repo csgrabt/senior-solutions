@@ -1,4 +1,4 @@
-package employees;
+/*package employees;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,4 +27,4 @@ public class DbInitializer implements CommandLineRunner {
 
     }
 
-}
+}*/

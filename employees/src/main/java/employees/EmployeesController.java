@@ -25,7 +25,7 @@ public class EmployeesController {
 
     @GetMapping
     public List<EmployeeDto> listEmployees(@RequestParam Optional<String> prefix) {
-        return employeesService.employeeList(prefix);
+        return employeesService.listEmployees(prefix);
     }
 
     @GetMapping("/{id}")
