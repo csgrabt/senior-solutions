@@ -2,10 +2,8 @@ package employees;
 
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +17,7 @@ public class EmployeesService {
     private ModelMapper modelMapper;
     private AtomicLong idGenerator = new AtomicLong();
 
+    private EmployeesDao employeesDao;
 
     private List<Employee> employeeList = Collections.synchronizedList(new ArrayList<>(
             List.of(
@@ -27,9 +26,10 @@ public class EmployeesService {
             )
     ));
 
-    public EmployeesService(ModelMapper modelMapper, List<Employee> employeeList) {
+    public EmployeesService(ModelMapper modelMapper, List<Employee> employeeList, EmployeesDao employeesDao) {
         this.modelMapper = modelMapper;
 
+        this.employeesDao = employeesDao;
     }
 
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
@@ -40,14 +40,19 @@ public class EmployeesService {
     }
 
     public List<EmployeeDto> employeeList(Optional<String> prefix) {
-        Type targetListType = new TypeToken<List<EmployeeDto>>() {
-        }.getType();
-        List<Employee> filtered = employeeList
+        return employeesDao.findAll()
                 .stream()
                 .filter(n -> prefix.isEmpty() || n.getName().toLowerCase().startsWith(prefix.get().toLowerCase()))
-                .collect(Collectors.toList());
+                .map(n -> modelMapper.map(n, EmployeeDto.class)).collect(Collectors.toList());
 
-        return modelMapper.map(filtered, targetListType);
+        // Type targetListType = new TypeToken<List<EmployeeDto>>() {
+        // }.getType();
+        // List<Employee> filtered = employeeList
+        //         .stream()
+        //         .filter(n -> prefix.isEmpty() || n.getName().toLowerCase().startsWith(prefix.get().toLowerCase()))
+        //         .collect(Collectors.toList());
+
+        // return modelMapper.map(filtered, targetListType);
     }
 
     public EmployeeDto findEmployeeById(long id) {
