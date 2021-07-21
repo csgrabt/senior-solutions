@@ -9,7 +9,7 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="activitytracker"/>
             <property name="javax.persistence.jdbc.password" value="activitytracker"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/activitytracker"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3309/activitytracker"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDB10Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
