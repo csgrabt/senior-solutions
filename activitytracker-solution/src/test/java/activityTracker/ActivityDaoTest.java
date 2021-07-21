@@ -157,6 +157,8 @@ class ActivityDaoTest {
         List<Object[]> list = activityDao.findTrackPointCountByActivity();
 
         System.out.println(Arrays.toString(list.get(0)));
+        System.out.println(Arrays.toString(list.get(1)));
+        System.out.println(Arrays.toString(list.get(2)));
     }
 }
 
