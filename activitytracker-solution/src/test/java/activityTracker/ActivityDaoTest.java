@@ -112,21 +112,21 @@ class ActivityDaoTest {
         activity2.setStartTime(LocalDateTime.of(2022, 1, 10, 8, 10));
         activity2.setType(ActivityType.BASKETBALL);
 
-        for(int i = 0; i <500; i++){
-            activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(1900+i, 1, 1, 1, 1), 10, 10+i));
+        for (int i = 0; i < 500; i++) {
+            activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(1900 + i, 1, 1, 1, 1), 10, 10 + i));
         }
-       //TrackPoint trackPoint10 = new TrackPoint(LocalDateTime.of(1900, 1, 1, 1, 1), 10, 10);
-       //TrackPoint trackPoint20 = new TrackPoint(LocalDateTime.of(1901, 1, 1, 1, 1), 11, 10);
-       //TrackPoint trackPoint30 = new TrackPoint(LocalDateTime.of(1902, 1, 1, 1, 1), 12, 10);
-       //TrackPoint trackPoint40 = new TrackPoint(LocalDateTime.of(1903, 1, 1, 1, 1), 13, 10);
-       //TrackPoint trackPoint50 = new TrackPoint(LocalDateTime.of(1904, 1, 1, 1, 1), 14, 10);
-       //TrackPoint trackPoint60 = new TrackPoint(LocalDateTime.of(1999, 1, 1, 1, 1), 9, 10);
-       //activity2.addTrackPoint(trackPoint10, trackPoint20, trackPoint30, trackPoint40, trackPoint50, trackPoint60);
+        //TrackPoint trackPoint10 = new TrackPoint(LocalDateTime.of(1900, 1, 1, 1, 1), 10, 10);
+        //TrackPoint trackPoint20 = new TrackPoint(LocalDateTime.of(1901, 1, 1, 1, 1), 11, 10);
+        //TrackPoint trackPoint30 = new TrackPoint(LocalDateTime.of(1902, 1, 1, 1, 1), 12, 10);
+        //TrackPoint trackPoint40 = new TrackPoint(LocalDateTime.of(1903, 1, 1, 1, 1), 13, 10);
+        //TrackPoint trackPoint50 = new TrackPoint(LocalDateTime.of(1904, 1, 1, 1, 1), 14, 10);
+        //TrackPoint trackPoint60 = new TrackPoint(LocalDateTime.of(1999, 1, 1, 1, 1), 9, 10);
+        //activity2.addTrackPoint(trackPoint10, trackPoint20, trackPoint30, trackPoint40, trackPoint50, trackPoint60);
         activityDao.saveActivity(activity2);
 
-        List<Coordinate> coordinates = activityDao.findTrackPointCoordinatesByDate(LocalDateTime.of(2000, 1, 1, 1, 1, 1));
+        List<Coordinate> coordinates = activityDao.findTrackPointCoordinatesByDate(LocalDateTime.of(2000, 1, 1, 1, 1, 1), 0, 10);
         //assertEquals(12, coordinates.size());
-        System.out.println(coordinates);
+        System.out.println(coordinates.size());
 
 
     }

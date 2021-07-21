@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @NoArgsConstructor
+@NamedQuery(name = "findCoordinate", query ="Select t from TrackPoint t where t.activity.startTime > :afterThis")
 public class TrackPoint {
 
     @Id
