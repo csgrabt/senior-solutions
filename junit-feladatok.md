@@ -20,4 +20,4 @@ Kérlek jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
 * [x] AssertJ
 * [x] AssertJ kiterjeszthetőség
 * [x] Mockito
-* [ ] Teszt lefedettség
+* [x] Teszt lefedettség
