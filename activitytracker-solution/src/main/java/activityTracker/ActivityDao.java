@@ -1,5 +1,7 @@
 package activityTracker;
 
+import org.modelmapper.ModelMapper;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class ActivityDao {
     private EntityManagerFactory entityManagerFactory;
+    private ModelMapper modelMapper;
 
     public ActivityDao(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
@@ -76,7 +79,7 @@ public class ActivityDao {
     public List<Coordinate> findTrackPointCoordinatesByDate(LocalDateTime afterThis, int start, int max) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Coordinate> activityList = em.createNamedQuery("findCoordinate",TrackPoint.class)       //createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
+        List<Coordinate> activityList = em.createNamedQuery("findCoordinate", TrackPoint.class)       //createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
                 .setParameter("afterThis", afterThis)
                 .setFirstResult(start)
                 .setMaxResults(max)
@@ -87,11 +90,18 @@ public class ActivityDao {
         em.close();
 
         return activityList;
-        // return activityList.stream()
-        //         .flatMap(l -> l.getTrackPoints().stream())
-        //         .map(n -> new Coordinate(n.getLat(), n.getLon()))
-        //         .collect(Collectors.toList());
+
     }
+
+    public List<Object[]> findTrackPointCountByActivity() {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Object[]> activities = em.createQuery("select a.description, count(a.trackPoints.size) from Activity a order by a.description")
+                .getResultList();
+        em.close();
+        return activities;
+    }
+
+
 }
 
 
