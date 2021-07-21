@@ -76,14 +76,19 @@ public class ActivityDao {
     public List<Coordinate> findTrackPointCoordinatesByDate(LocalDateTime afterThis) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Activity> activityList = em.createQuery("Select distinct a from Activity a  join fetch a.trackPoints where a.startTime > :afterThis", Activity.class)
+        List<Coordinate> activityList = em.createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
                 .setParameter("afterThis", afterThis)
-                .getResultList();
-        em.close();
-        return activityList.stream()
-                .flatMap(l -> l.getTrackPoints().stream())
+                .getResultList()
+                .stream()
                 .map(n -> new Coordinate(n.getLat(), n.getLon()))
                 .collect(Collectors.toList());
+        em.close();
+
+        return activityList;
+        // return activityList.stream()
+        //         .flatMap(l -> l.getTrackPoints().stream())
+        //         .map(n -> new Coordinate(n.getLat(), n.getLon()))
+        //         .collect(Collectors.toList());
     }
 }
 
