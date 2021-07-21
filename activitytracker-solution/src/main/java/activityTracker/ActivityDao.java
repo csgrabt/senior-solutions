@@ -79,14 +79,11 @@ public class ActivityDao {
     public List<Coordinate> findTrackPointCoordinatesByDate(LocalDateTime afterThis, int start, int max) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Coordinate> activityList = em.createNamedQuery("findCoordinate", TrackPoint.class)       //createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
+        List<Coordinate> activityList = em.createNamedQuery("findCoordinate", Coordinate.class)       //createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
                 .setParameter("afterThis", afterThis)
                 .setFirstResult(start)
                 .setMaxResults(max)
-                .getResultList()
-                .stream()
-                .map(n -> new Coordinate(n.getLat(), n.getLon()))
-                .collect(Collectors.toList());
+                .getResultList();
         em.close();
 
         return activityList;
