@@ -65,7 +65,7 @@ class ActivityDaoTest {
         activity.setType(ActivityType.HIKING);
         activity.setLabels(List.of("Mátra", "Ősz", "Falevél"));
         activityDao.saveActivity(activity);
-        Activity anotherActivity = activityDao.findActivityByIdWithLabels(activity.getId());
+        Activity anotherActivity = activityDao.findActivityByIdWithLabels();
         assertEquals(3, anotherActivity.getLabels().size());
     }
 
@@ -86,7 +86,7 @@ class ActivityDaoTest {
         activity.addTrackPoint(trackPoint1, trackPoint2, trackPoint3, trackPoint4, trackPoint5, trackPoint6);
         activityDao.saveActivity(activity);
 
-        Activity anotherActivity = activityDao.findActivityByIdWithTrackPoints(activity.getId());
+        Activity anotherActivity = activityDao.findActivityByIdWithTrackPoints();
 
         assertEquals(1999, anotherActivity.getTrackPoints().get(0).getTime().getYear());
 

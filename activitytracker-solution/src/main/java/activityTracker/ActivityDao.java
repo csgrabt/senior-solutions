@@ -1,16 +1,16 @@
 package activityTracker;
 
-import org.modelmapper.ModelMapper;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ActivityDao {
     private EntityManagerFactory entityManagerFactory;
-    private ModelMapper modelMapper;
+
 
     public ActivityDao(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
@@ -50,7 +50,7 @@ public class ActivityDao {
 
     }
 
-    public Activity findActivityByIdWithLabels(long id) {
+    public Activity findActivityByIdWithLabels() {
         EntityManager em = entityManagerFactory.createEntityManager();
         Activity activity = em.createQuery("select a from Activity a join fetch a.labels", Activity.class)
                 .getSingleResult();
@@ -58,7 +58,7 @@ public class ActivityDao {
         return activity;
     }
 
-    public Activity findActivityByIdWithTrackPoints(long id) {
+    public Activity findActivityByIdWithTrackPoints() {
         EntityManager em = entityManagerFactory.createEntityManager();
         Activity activity = em.createQuery("select a from Activity a join fetch a.trackPoints", Activity.class)
                 .getSingleResult();
@@ -79,7 +79,7 @@ public class ActivityDao {
     public List<Coordinate> findTrackPointCoordinatesByDate(LocalDateTime afterThis, int start, int max) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Coordinate> activityList = em.createNamedQuery("findCoordinate", Coordinate.class)       //createQuery("Select t from TrackPoint t where t.activity.startTime > :afterThis", TrackPoint.class)
+        List<Coordinate> activityList = em.createNamedQuery("findCoordinate", Coordinate.class)
                 .setParameter("afterThis", afterThis)
                 .setFirstResult(start)
                 .setMaxResults(max)
