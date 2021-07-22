@@ -36,6 +36,16 @@ Content-Type: application/json
 
 {
   "name": "nnnnnn",
-  "lat": -90.1,
-  "lon": 180.1
+  "lat": -90,
+  "lon": -9179
+}
+
+###
+PUT http://localhost:8080/api/locations/1
+Content-Type: application/json
+
+{
+  "name":"Abalala",
+  "lat": -100000,
+  "lon": -100000
 }

@@ -11,6 +11,9 @@ import java.util.Optional;
 @NoArgsConstructor
 public class UpdateLocationCommand {
     private Optional<String> name;
+
+    @CoordinateAsOptionalDouble(type = Type.LAT)
     private Optional<Double> lat;
+    @CoordinateAsOptionalDouble(type = Type.LON)
     private Optional<Double> lon;
 }
