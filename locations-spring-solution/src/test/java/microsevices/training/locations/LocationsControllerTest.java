@@ -31,7 +31,7 @@ class LocationsControllerTest {
                 new LocationDto("Xuzhou", 10, 15)
         ));
 
-        List<LocationDto> locations = locationsController.geLocation(Optional.empty());
+        List<LocationDto> locations = locationsController.getLocation(Optional.empty());
 
         assertThat(locations)
                 .hasSize(2)

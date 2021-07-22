@@ -22,9 +22,20 @@ Content-Type: application/json
 
 {
   "name":"Abalala",
-  "lat": 10000,
-  "lon": ""
+  "lat": 0,
+  "lon": 0
 }
 
 ###
 DELETE http://localhost:8080/api/locations/1
+
+### validation
+
+POST http://localhost:8080/api/locations/
+Content-Type: application/json
+
+{
+  "name": "nnnnnn",
+  "lat": -90.1,
+  "lon": 180.1
+}
