@@ -4,12 +4,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
 
-public class CoordinateValidatorAsOptional implements ConstraintValidator<CoordinateAsOptionalDouble, Optional<Double>> {
+public class CoordinateValidatorAsOptional implements ConstraintValidator<Coordinate, Optional<Double>> {
     private Type type;
 
 
     @Override
-    public void initialize(CoordinateAsOptionalDouble constraintAnnotation) {
+    public void initialize(Coordinate constraintAnnotation) {
         this.type = constraintAnnotation.type();
     }
 
@@ -19,6 +19,7 @@ public class CoordinateValidatorAsOptional implements ConstraintValidator<Coordi
         if (!aDouble.isEmpty()) {
 
             Double a = aDouble.get();
+
             return this.type.getMin() <= a && this.type.getMax() >= a;
 
         } else {

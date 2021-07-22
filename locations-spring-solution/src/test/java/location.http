@@ -46,6 +46,6 @@ Content-Type: application/json
 
 {
   "name":"Abalala",
-  "lat": -100000,
-  "lon": -100000
+  "lat": "",
+  "lon": -10000
 }

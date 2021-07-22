@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-@Constraint(validatedBy = CoordinateValidator.class)
+@Constraint(validatedBy = {CoordinateValidator.class, CoordinateValidatorAsOptional.class})
 public @interface Coordinate {
 
     String message() default "invalid coordinate";

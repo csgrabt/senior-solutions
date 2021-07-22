@@ -12,8 +12,8 @@ import java.util.Optional;
 public class UpdateLocationCommand {
     private Optional<String> name;
 
-    @CoordinateAsOptionalDouble(type = Type.LAT)
+    @Coordinate(type = Type.LAT)
     private Optional<Double> lat;
-    @CoordinateAsOptionalDouble(type = Type.LON)
+    @Coordinate(type = Type.LON)
     private Optional<Double> lon;
 }
