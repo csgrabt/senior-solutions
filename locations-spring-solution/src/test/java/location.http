@@ -37,7 +37,7 @@ Content-Type: application/json
 {
   "name": "nnnnnn",
   "lat": -90,
-  "lon": -9179
+  "lon": -9
 }
 
 ###
