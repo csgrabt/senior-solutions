@@ -17,7 +17,7 @@ public class LocationController {
     }
 
     @GetMapping
-    public List<Location> getLocations() {
-        return locationService.getLocations();
+    public String getLocations() {
+        return locationService.getLocations().toString();
     }
 }
