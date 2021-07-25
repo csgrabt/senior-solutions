@@ -2,7 +2,7 @@ package microsevices.training.locations;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Optional;
+
 
 
 public class CoordinateValidator implements ConstraintValidator<Coordinate, Double> {
